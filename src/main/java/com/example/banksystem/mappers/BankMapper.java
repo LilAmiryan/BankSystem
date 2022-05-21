@@ -2,10 +2,12 @@ package com.example.banksystem.mappers;
 
 import com.example.banksystem.dto.BankDto;
 import com.example.banksystem.model.Bank;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class BankMapper {
 
     public Bank toBank(BankDto bankDto){
@@ -22,7 +24,7 @@ public class BankMapper {
         bankDto.setBankType(bank.getBankType());
         return bankDto;
     }
-    public List<BankDto> mapAllToBanktDto(List<Bank> banks) {
+    public List<BankDto> mapAllToBankDto(List<Bank> banks) {
         return banks.stream()
                 .map(this::toBankDto)
                 .collect(Collectors.toList());

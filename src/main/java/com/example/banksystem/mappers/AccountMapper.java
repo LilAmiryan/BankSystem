@@ -4,10 +4,12 @@ import com.example.banksystem.dto.AccountDto;
 import com.example.banksystem.dto.BankDto;
 import com.example.banksystem.model.Account;
 import com.example.banksystem.model.Bank;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class AccountMapper {
     public Account toAccount(AccountDto accountDto){
         Account account=new Account();
