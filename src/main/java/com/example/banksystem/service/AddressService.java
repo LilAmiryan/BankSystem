@@ -4,14 +4,12 @@ import com.example.banksystem.dto.AddressDto;
 import com.example.banksystem.mappers.AddressMapper;
 import com.example.banksystem.model.Address;
 import com.example.banksystem.repository.AddressRepository;
-import net.bytebuddy.dynamic.DynamicType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
 @Service
 public class AddressService {
     AddressRepository addressRepository;

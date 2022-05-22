@@ -16,7 +16,7 @@ public class CardDto {
     private CardType cardType;
     private BalanceType balanceType;//(Default -DEBIT)
     private Double creditBalance;
-    private Long cardNumber;
+    private String cardNumber;
     private LocalDate expireDate;
     private String codeCVC;
 

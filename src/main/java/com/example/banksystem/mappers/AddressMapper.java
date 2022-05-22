@@ -4,6 +4,8 @@ import com.example.banksystem.dto.AddressDto;
 import com.example.banksystem.model.Address;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
 @Component
 public class AddressMapper {
     public Address toAddress(AddressDto addressDto) {
@@ -19,12 +21,16 @@ public class AddressMapper {
 
     public AddressDto toAddressDto(Address address) {
         AddressDto addressDto = new AddressDto();
-        addressDto.setCountry(address.getCountry());
+        //addressDto.setCountry(address.getCountry());
         addressDto.setRegion(address.getRegion());
         addressDto.setCity(address.getCity());
         addressDto.setStreet(address.getStreet());
         addressDto.setBuilding(address.getBuilding());
         addressDto.setHome(address.getHome());
         return addressDto;
+    }
+
+    public List<AddressDto> mapAllToAddressDto(List<Address> addresses) {
+        return addresses.stream().map(this::toAddressDto).collect(Collectors.toList());
     }
 }
