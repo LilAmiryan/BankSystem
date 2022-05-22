@@ -2,10 +2,11 @@ package com.example.banksystem.mappers;
 
 import com.example.banksystem.dto.ClientDto;
 import com.example.banksystem.model.Client;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Component
 public class ClientMapper {
 
     public Client toClient(ClientDto clientDto) {
