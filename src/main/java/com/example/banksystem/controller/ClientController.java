@@ -1,9 +1,6 @@
 package com.example.banksystem.controller;
 
-import com.example.banksystem.dto.AddressDto;
 import com.example.banksystem.dto.ClientDto;
-import com.example.banksystem.model.Client;
-import com.example.banksystem.response.address.AddressCreateResponse;
 import com.example.banksystem.response.client.ClientCreateResponse;
 import com.example.banksystem.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
