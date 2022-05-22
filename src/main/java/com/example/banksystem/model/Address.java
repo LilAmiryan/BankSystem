@@ -1,6 +1,5 @@
 package com.example.banksystem.model;
 
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +26,7 @@ public class Address {
     @Column(name = "building", length = 30, nullable = true)
     private String building;
 
-    @Column(name = "hime", length = 30, nullable = false)
+    @Column(name = "home", length = 30, nullable = false)
     private String home;
 
     public Address() {

@@ -1,4 +1,4 @@
-package response.address;
+package com.example.banksystem.response.address;
 
 import com.example.banksystem.dto.AddressDto;
 import org.springframework.http.HttpStatus;
