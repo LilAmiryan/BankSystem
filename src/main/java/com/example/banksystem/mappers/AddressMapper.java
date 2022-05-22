@@ -2,10 +2,11 @@ package com.example.banksystem.mappers;
 
 import com.example.banksystem.dto.AddressDto;
 import com.example.banksystem.model.Address;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Component
 public class AddressMapper {
     public Address toAddress(AddressDto addressDto) {
         Address address = new Address();
@@ -20,7 +21,7 @@ public class AddressMapper {
 
     public AddressDto toAddressDto(Address address) {
         AddressDto addressDto = new AddressDto();
-        addressDto.setCountry(address.getCountry());
+        //addressDto.setCountry(address.getCountry());
         addressDto.setRegion(address.getRegion());
         addressDto.setCity(address.getCity());
         addressDto.setStreet(address.getStreet());
