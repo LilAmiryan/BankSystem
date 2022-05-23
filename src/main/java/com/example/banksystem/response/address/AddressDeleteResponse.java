@@ -15,7 +15,8 @@ public class AddressDeleteResponse {
     }
 
     public ResponseEntity<?> onFailure(){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No address with such id.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                body("This address is in use by another client.");
     }
 
     public ResponseEntity<AddressDto> onSuccess(){

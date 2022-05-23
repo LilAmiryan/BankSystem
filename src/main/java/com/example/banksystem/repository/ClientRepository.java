@@ -19,6 +19,6 @@ public interface ClientRepository extends JpaRepository<Client,Long> {
                         client.getAddress(),client.getDateOfBirth(),client.getEmail(),
                         client.getRegisterDate()
                 );
-
     }
+    boolean existsByAddress_AddressId(Long id);
 }

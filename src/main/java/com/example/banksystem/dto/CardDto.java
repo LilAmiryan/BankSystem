@@ -1,6 +1,7 @@
 package com.example.banksystem.dto;
 
 import com.example.banksystem.model.enumtypeofmodelfields.BalanceType;
+import com.example.banksystem.model.enumtypeofmodelfields.CardStatusType;
 import com.example.banksystem.model.enumtypeofmodelfields.CardType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +20,6 @@ public class CardDto {
     private String cardNumber;
     private LocalDate expireDate;
     private String codeCVC;
+    private CardStatusType status;
 
 }

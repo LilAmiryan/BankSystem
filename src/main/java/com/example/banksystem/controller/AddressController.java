@@ -38,19 +38,17 @@ public class AddressController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAddress(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteAddress(@PathVariable("id") Long id) throws Exception {
         Optional<AddressDto> addressDto = addressService.deleteAddress(id);
-
         if (addressDto.isEmpty()) {
             return new AddressDeleteResponse().onFailure();
         }
-
         return new AddressDeleteResponse(addressDto.get()).onSuccess();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAddress(@RequestBody AddressDto addressDto,
-                                           @PathVariable("id") Long id) {
+                                           @PathVariable("id") Long id) throws Exception {
         Optional<AddressDto> updatedAddressDto = addressService.updateAddress(addressDto, id);
 
         if (updatedAddressDto.isEmpty()) {

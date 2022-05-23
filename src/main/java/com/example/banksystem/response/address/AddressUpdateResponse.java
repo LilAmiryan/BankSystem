@@ -16,7 +16,7 @@ public class AddressUpdateResponse {
     }
 
     public ResponseEntity<?> onFailure() {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No address with such id.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Input parameter(s) are wrong.");
     }
 
     public ResponseEntity<AddressDto> onSuccess() {
