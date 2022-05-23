@@ -17,7 +17,7 @@ public class AddressCreateResponse {
 
     public ResponseEntity<?> onFailure() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("Address already exists.");
+                .body("Input parameter(s) are wrong.");
     }
 
     public ResponseEntity<AddressDto> onSuccess() {
