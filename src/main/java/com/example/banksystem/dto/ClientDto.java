@@ -18,7 +18,7 @@ public class ClientDto {
     private String firstName;
     private String lastName;
     private String ssn;	//Unique
-    private java.time.LocalDate dateOfBirth;
+    private LocalDate dateOfBirth;
     private String phoneNumber;
     private String email;
     private Address address;

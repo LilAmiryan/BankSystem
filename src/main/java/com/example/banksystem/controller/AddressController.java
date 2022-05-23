@@ -11,7 +11,6 @@ import com.example.banksystem.response.address.AddressUpdateResponse;
 
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("/api/address")
 public class AddressController {
