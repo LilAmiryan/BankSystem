@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Component
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,7 +21,7 @@ public class ClientDto {
     private java.time.LocalDate dateOfBirth;
     private String phoneNumber;
     private String email;
-    private Address address;	//fk_address_client_ManyToOne
+    private Address address;
     private LocalDate registerDate;
 
 }

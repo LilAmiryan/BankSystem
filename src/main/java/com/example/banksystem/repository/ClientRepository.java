@@ -7,14 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.LocalDate;
 
 public interface ClientRepository extends JpaRepository<Client,Long> {
-     boolean existsByFirstNameAndSssnAAndLastNameAndPhoneNumberAndAddressAndDateOfBirthAnAndRegisterDateAndEmail
+     boolean existsByFirstNameAndSsnAndPhoneNumberAndAddressAndDateOfBirthAndEmailAndRegisterDate
              (String firstName, String ssn, String phoneNumber,
               Address address, LocalDate dateOfBirth, String email,
               LocalDate registerDate);
 
     default boolean clientExist(Client client) {
         return
-                existsByFirstNameAndSssnAAndLastNameAndPhoneNumberAndAddressAndDateOfBirthAnAndRegisterDateAndEmail(
+                existsByFirstNameAndSsnAndPhoneNumberAndAddressAndDateOfBirthAndEmailAndRegisterDate(
                         client.getFirstName(),client.getSsn(),client.getPhoneNumber(),
                         client.getAddress(),client.getDateOfBirth(),client.getEmail(),
                         client.getRegisterDate()

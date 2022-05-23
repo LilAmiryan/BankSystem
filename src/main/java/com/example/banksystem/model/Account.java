@@ -1,10 +1,18 @@
 package com.example.banksystem.model;
 
+import lombok.*;
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "account")
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,101 +24,30 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id", foreignKey = @ForeignKey(name = "fk_Bank_Account_ManyToOne"))
+    @ToString.Exclude
     private Bank bank;    //	fk_Bank_Account_ManyToOne
 
-    @Column(name = "accountBalance")
+    @Column(name = "account_balance")
     private Double accountBalance;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", foreignKey = @ForeignKey(name = "fk_client_account_ManyToOne"))
+    @ToString.Exclude
     private  Client client; //fk_client_account_ManyToOne
 
-    @Column(name = "accountNumber",length = 40, unique = true, nullable = false)
+    @Column(name = "account_number",length = 40, unique = true, nullable = false)
     private String accountNumber; //Unique
-
-
-    public Account() {
-    }
-
-    public Account(Long accountId, String iban, Bank bank, Double accountBalance, Client client, String accountNumber) {
-        this.accountId = accountId;
-        this.iban = iban;
-        this.bank = bank;
-        this.accountBalance = accountBalance;
-        this.client = client;
-        this.accountNumber = accountNumber;
-    }
-
-    public Long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
-    }
-
-    public String getIban() {
-        return iban;
-    }
-
-    public void setIban(String iban) {
-        this.iban = iban;
-    }
-
-    public Bank getBank() {
-        return bank;
-    }
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
-
-    public Double getAccountBalance() {
-        return accountBalance;
-    }
-
-    public void setAccountBalance(Double accountBalance) {
-        this.accountBalance = accountBalance;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Account account = (Account) o;
-        return Objects.equals(accountId, account.accountId) && Objects.equals(iban, account.iban) && Objects.equals(bank, account.bank) && Objects.equals(accountBalance, account.accountBalance) && Objects.equals(client, account.client) && Objects.equals(accountNumber, account.accountNumber);
+        return accountId != null && Objects.equals(accountId, account.accountId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountId, iban, bank, accountBalance, client, accountNumber);
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "accountId=" + accountId +
-                ", iban='" + iban + '\'' +
-                ", bank=" + bank +
-                ", accountBalance=" + accountBalance +
-                ", client=" + client +
-                ", accountNumber='" + accountNumber + '\'' +
-                '}';
+        return getClass().hashCode();
     }
 }
