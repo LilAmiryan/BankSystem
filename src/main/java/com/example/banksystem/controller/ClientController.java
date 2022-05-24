@@ -2,13 +2,12 @@ package com.example.banksystem.controller;
 
 import com.example.banksystem.dto.ClientDto;
 import com.example.banksystem.response.client.ClientCreateResponse;
+import com.example.banksystem.response.client.ClientDeleteResponse;
+import com.example.banksystem.response.client.ClientUpdateResponse;
 import com.example.banksystem.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -16,7 +15,7 @@ import java.util.Optional;
 @RequestMapping("/api/client")
 public class ClientController {
 
-    private ClientService clientService;
+    private final ClientService clientService;
 
     @Autowired
     public ClientController(ClientService clientService) {
@@ -36,5 +35,28 @@ public class ClientController {
         }
 
         return new ClientCreateResponse(optionalClientDto.get()).onSuccess();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateClient(@RequestBody ClientDto clientDto,
+                                           @PathVariable("id") Long id) {
+        Optional<ClientDto> updatedClientDto = clientService.updateClient(clientDto,id);
+
+        if (updatedClientDto.isEmpty()) {
+            return new ClientUpdateResponse().onFailure();
+        }
+
+        return new ClientUpdateResponse(updatedClientDto.get()).onSuccess();
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteClientById(@PathVariable("id") Long id) throws Exception {
+        Optional <ClientDto> clientDto=clientService.deleteClient(id);
+        if (clientDto.isEmpty()) {
+            return new ClientUpdateResponse().onFailure();
+        }
+
+        return new ClientDeleteResponse(clientDto.get()).onSuccess();
     }
 }

@@ -6,12 +6,9 @@ import com.example.banksystem.model.Address;
 import com.example.banksystem.repository.AddressRepository;
 import com.example.banksystem.repository.ClientRepository;
 import com.example.banksystem.validator.AddressValidator;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -19,7 +16,6 @@ public class AddressService {
     AddressRepository addressRepository;
     AddressMapper addressMapper;
     AddressValidator addressValidator;
-
     ClientRepository clientRepository;
 
     @Autowired
@@ -51,10 +47,9 @@ public class AddressService {
             return Optional.empty();
         }
         Address deletedAddress = addressRepository.findById(id).get();
-                addressRepository.deleteById(id);
+        addressRepository.deleteById(id);
         return Optional.of(addressMapper.
                 toAddressDto(deletedAddress));
-
     }
 
     public Optional<AddressDto> updateAddress(AddressDto addressDto, Long id) throws Exception {
@@ -64,6 +59,7 @@ public class AddressService {
             if (!addressRepository.existsById(id)) {
                 throw new Exception("No address with such Id");
             }
+            Optional<AddressDto> createdAddress=createAddress(addressDto);
             Address address = addressMapper.toAddress(addressDto);
             address.setAddressId(id);
             Address savedAddress = addressRepository.save(address);

@@ -19,7 +19,6 @@ public class ClientDto {
     private String firstName;
     private String lastName;
     private String ssn;	//Unique
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dateOfBirth;
     private String phoneNumber;
