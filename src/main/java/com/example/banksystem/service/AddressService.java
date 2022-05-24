@@ -9,13 +9,9 @@ import com.example.banksystem.repository.ClientRepository;
 import com.example.banksystem.response.address.AddressDeleteResponse;
 import com.example.banksystem.response.address.AddressUpdateResponse;
 import com.example.banksystem.validator.AddressValidator;
-import net.bytebuddy.implementation.bytecode.Throw;
-import org.apache.commons.math3.analysis.function.Add;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
