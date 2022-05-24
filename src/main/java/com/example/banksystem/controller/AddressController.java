@@ -1,6 +1,7 @@
 package com.example.banksystem.controller;
 
 import com.example.banksystem.dto.AddressDto;
+import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
 import com.example.banksystem.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,24 +38,27 @@ public class AddressController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAddress(@PathVariable("id") Long id) throws Exception {
-        Optional<AddressDto> addressDto = addressService.deleteAddress(id);
-        if (addressDto.isEmpty()) {
-            return new AddressDeleteResponse().onFailure();
+    public ResponseEntity<?> deleteAddress(@PathVariable("id") Long id){
+        AddressDeleteResponse deleteResponse = addressService.deleteAddress(id);
+
+        ErrorType deleteErrorType = deleteResponse.getErrorType();
+        if (deleteErrorType != null) {
+            return deleteResponse.onFailure(deleteErrorType);
         }
-        return new AddressDeleteResponse(addressDto.get()).onSuccess();
+        return deleteResponse.onSuccess();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAddress(@RequestBody AddressDto addressDto,
-                                           @PathVariable("id") Long id) throws Exception {
-        Optional<AddressDto> updatedAddressDto = addressService.updateAddress(addressDto, id);
+                                           @PathVariable("id") Long id)  {
 
-        if (updatedAddressDto.isEmpty()) {
-            return new AddressUpdateResponse().onFailure();
+        AddressUpdateResponse updatedResponse = addressService.updateAddress(addressDto, id);
+        ErrorType errorType=updatedResponse.getErrorType();
+        if(errorType!=null) {
+            return updatedResponse.onFailure(errorType);
         }
 
-        return new AddressUpdateResponse(updatedAddressDto.get()).onSuccess();
+        return updatedResponse.onSuccess();
 
     }
 }
