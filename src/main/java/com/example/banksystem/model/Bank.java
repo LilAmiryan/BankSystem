@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,16 +28,17 @@ public class Bank {
     @Column(name = "bank_name", length = 30, nullable = false)
     private String bankName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "bank_type", length = 30, nullable = false)
     private BankType bankType;    //ENUM
 
     @OneToMany(mappedBy = "bank", cascade = CascadeType.PERSIST)
     @ToString.Exclude
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
 
     @OneToMany(mappedBy = "bank", cascade = CascadeType.PERSIST)
     @ToString.Exclude
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

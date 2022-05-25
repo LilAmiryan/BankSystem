@@ -11,8 +11,10 @@ import java.util.Optional;
 
 @Service
 public class ClientService {
+
     ClientRepository clientRepository;
     ClientMapper clientMapper;
+//    ClientValidator clientValidator;
 
     @Autowired
     public ClientService(ClientRepository clientRepository, ClientMapper clientMapper) {

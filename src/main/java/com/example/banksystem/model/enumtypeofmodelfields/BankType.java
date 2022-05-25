@@ -1,7 +1,5 @@
 package com.example.banksystem.model.enumtypeofmodelfields;
 
-import com.example.banksystem.model.Bank;
-
 public enum BankType {
     CENTRAL_BANK(1, "CENTRAL_BANK"),
     COMMERCIAL_BANK(2, "COMMERCIAL_BANK"),
@@ -16,7 +14,7 @@ public enum BankType {
         this.type = type;
     }
 
-    public BankType findById(int id) {
+    public static BankType findById(int id) {
         for (BankType type : values()) {
             if (type.id == id) {
                 return type;

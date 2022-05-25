@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,11 +51,11 @@ public class Client {
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST)
     @ToString.Exclude
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST)
     @ToString.Exclude
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
 
     @Column(name = "register_date", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
