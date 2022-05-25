@@ -16,7 +16,7 @@ public class CardMapper {
         card.setCardType(cardDto.getCardType());
         card.setBalanceType(cardDto.getBalanceType());
         card.setCreditBalance(cardDto.getCreditBalance());
-//        card.setCardNumber(cardDto.getCardNumber());
+        card.setCardNumber(cardDto.getCardNumber());
         card.setExpireDate(cardDto.getExpireDate());
         card.setCodeCVC(cardDto.getCodeCVC());
         card.setStatus(cardDto.getStatus());

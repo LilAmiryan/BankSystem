@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +16,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,16 +43,13 @@ public class Client {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id",
             foreignKey = @ForeignKey(name = "fk_address_client_ManyToOne"))
-    @ToString.Exclude
     private Address address;    //	fk_address_client_ManyToOne
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST)
-    @ToString.Exclude
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST)
-    @ToString.Exclude
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
 
     @Column(name = "register_date", nullable = false)
     private LocalDate registerDate;
