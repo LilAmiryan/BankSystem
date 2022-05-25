@@ -17,7 +17,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,15 +45,12 @@ public class Client {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id",
             foreignKey = @ForeignKey(name = "fk_address_client_ManyToOne"))
-    @ToString.Exclude
     private Address address;    //	fk_address_client_ManyToOne
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST)
-    @ToString.Exclude
     private List<Card> cards = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST)
-    @ToString.Exclude
     private List<Account> accounts = new ArrayList<>();
 
     @Column(name = "register_date", nullable = false)

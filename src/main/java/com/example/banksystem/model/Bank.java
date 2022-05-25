@@ -16,7 +16,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,11 +32,9 @@ public class Bank {
     private BankType bankType;    //ENUM
 
     @OneToMany(mappedBy = "bank", cascade = CascadeType.PERSIST)
-    @ToString.Exclude
     private List<Account> accounts = new ArrayList<>();
 
     @OneToMany(mappedBy = "bank", cascade = CascadeType.PERSIST)
-    @ToString.Exclude
     private List<Card> cards = new ArrayList<>();
 
     @Override

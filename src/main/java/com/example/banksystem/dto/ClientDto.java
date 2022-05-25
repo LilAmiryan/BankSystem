@@ -22,11 +22,9 @@ public class ClientDto {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dateOfBirth;
-
     private String phoneNumber;
     private String email;
-    private Address address;
-
+    private AddressDto addressDto;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate registerDate;
 }
