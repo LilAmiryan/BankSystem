@@ -1,9 +1,12 @@
 package com.example.banksystem.service;
 
 import com.example.banksystem.dto.ClientDto;
+import com.example.banksystem.mappers.AddressMapper;
 import com.example.banksystem.mappers.ClientMapper;
+import com.example.banksystem.model.Address;
 import com.example.banksystem.model.Client;
 import com.example.banksystem.repository.AccountRepository;
+import com.example.banksystem.repository.AddressRepository;
 import com.example.banksystem.repository.CardRepository;
 import com.example.banksystem.repository.ClientRepository;
 import com.example.banksystem.validator.ClientValidator;
@@ -19,6 +22,9 @@ public class ClientService {
     ClientValidator clientValidator;
     CardRepository cardRepository;
     AccountRepository accountRepository;
+    AddressMapper addressMapper;
+    AddressRepository addressRepository;
+    AddressService addressService;
 
     @Autowired
     public ClientService(ClientRepository clientRepository, ClientMapper clientMapper, ClientValidator clientValidator) {
@@ -33,6 +39,11 @@ public class ClientService {
             if (clientRepository.clientExist(client)) {
                 return Optional.of(clientMapper.toClientDto(client));
             }
+            if (!addressRepository.addressExists(client.getAddress())) {
+                addressService.createAddress(addressMapper.toAddressDto(client.getAddress()));
+            }
+            Address address = addressRepository.existsAddress
+                    (addressMapper.toAddressDto(client.getAddress()));
             Client savedClient = clientRepository.save(client);
             return Optional.of(clientMapper.toClientDto(savedClient));
         }
@@ -54,6 +65,7 @@ public class ClientService {
         return Optional.of(clientMapper.toClientDto(deletedClient));
 
     }
+
 
     public Optional<ClientDto> updateClient(ClientDto clientDto, Long id) {
 

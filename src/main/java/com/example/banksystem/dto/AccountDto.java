@@ -1,6 +1,7 @@
 package com.example.banksystem.dto;
 
 import com.example.banksystem.model.Bank;
+import com.example.banksystem.model.Client;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,5 @@ public class AccountDto {
     private Bank bank;
     private Double accountBalance;
     private String accountNumber;
-
+    private Client client;
 }

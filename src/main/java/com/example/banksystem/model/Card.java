@@ -4,7 +4,6 @@ import com.example.banksystem.model.enumtypeofmodelfields.BalanceType;
 import com.example.banksystem.model.enumtypeofmodelfields.CardStatusType;
 import com.example.banksystem.model.enumtypeofmodelfields.CardType;
 import lombok.*;
-import org.apache.commons.math3.random.RandomDataGenerator;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;

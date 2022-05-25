@@ -3,11 +3,8 @@ package com.example.banksystem.service;
 import com.example.banksystem.dto.AddressDto;
 import com.example.banksystem.mappers.AddressMapper;
 import com.example.banksystem.model.Address;
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
 import com.example.banksystem.repository.AddressRepository;
 import com.example.banksystem.repository.ClientRepository;
-import com.example.banksystem.response.address.AddressDeleteResponse;
-import com.example.banksystem.response.address.AddressUpdateResponse;
 import com.example.banksystem.validator.AddressValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +27,6 @@ public class AddressService {
         this.addressValidator = addressValidator;
         this.clientRepository = clientRepository;
     }
-
     public Optional<AddressDto> createAddress(AddressDto addressDto) {
         if (addressValidator.isValidAddress(addressDto)) {
             Address address = addressMapper.toAddress(addressDto);
@@ -43,46 +39,33 @@ public class AddressService {
         return Optional.empty();
     }
 
-    public AddressDeleteResponse deleteAddress(Long id) {
-        ErrorType errorType = null;
-
+    public Optional<AddressDto> deleteAddress(Long id) throws Exception {
         if (!addressRepository.existsById(id)) {
-            errorType = ErrorType.NOT_FOUND;
+            throw new Exception("No address with such Id");
         }
         if (clientRepository.existsByAddress_AddressId(id)) {
-            errorType = ErrorType.ALREADY_EXISTS;
+            return Optional.empty();
         }
-
-        if (errorType != null) {
-            return new AddressDeleteResponse(errorType);
-        }
-
-//      ready for delete
         Address deletedAddress = addressRepository.findById(id).get();
-        addressRepository.deleteById(id);
-
-        return new AddressDeleteResponse(addressMapper.toAddressDto(deletedAddress));
+                addressRepository.deleteById(id);
+        return Optional.of(addressMapper.
+                toAddressDto(deletedAddress));
 
     }
 
-    public AddressUpdateResponse updateAddress(AddressDto addressDto, Long id) {
-        ErrorType errorType = null;
-        if (!addressValidator.isValidAddress(addressDto)) {
-            errorType = ErrorType.NOT_VALID;
+    public Optional<AddressDto> updateAddress(AddressDto addressDto, Long id) throws Exception {
+
+
+        if (addressValidator.isValidAddress(addressDto)) {
+            if (!addressRepository.existsById(id)) {
+                throw new Exception("No address with such Id");
+            }
+            Address address = addressMapper.toAddress(addressDto);
+            address.setAddressId(id);
+            Address savedAddress = addressRepository.save(address);
+            return Optional.of(addressMapper.toAddressDto(savedAddress));
+
         }
-        if (!addressRepository.existsById(id)) {
-            errorType = ErrorType.NOT_FOUND;
-        }
-        if (errorType != null) {
-            return new AddressUpdateResponse(errorType);
-        }
-        Address address = addressMapper.toAddress(addressDto);
-        if (addressRepository.addressExists(address)) {
-            addressRepository.delete(address);
-            return new AddressUpdateResponse(addressMapper.toAddressDto(address));
-        }
-        address.setAddressId(id);
-        Address savedAddress = addressRepository.save(address);
-        return new AddressUpdateResponse(addressMapper.toAddressDto(savedAddress));
+        return Optional.empty();
     }
 }

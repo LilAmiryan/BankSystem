@@ -1,5 +1,6 @@
 package com.example.banksystem.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -30,6 +31,7 @@ public class Client {
     @Column(name = "ssn", length = 30, nullable = false, unique = true)
     private String ssn;    //Unique
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
@@ -46,6 +48,7 @@ public class Client {
     @ToString.Exclude
     private Address address;    //	fk_address_client_ManyToOne
 
+
     @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST)
     @ToString.Exclude
     private List<Card> cards;
@@ -54,6 +57,7 @@ public class Client {
     @ToString.Exclude
     private List<Account> accounts;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @Column(name = "register_date", nullable = false)
     private LocalDate registerDate;
 
@@ -64,6 +68,7 @@ public class Client {
         Client client = (Client) o;
         return clientId != null && Objects.equals(clientId, client.clientId);
     }
+
 
     @Override
     public int hashCode() {
