@@ -1,9 +1,7 @@
-package com.example.banksystem.mappers;
+package com.example.banksystem.repository.mappers;
 
 import com.example.banksystem.dto.AccountDto;
-import com.example.banksystem.dto.BankDto;
 import com.example.banksystem.model.Account;
-import com.example.banksystem.model.Bank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

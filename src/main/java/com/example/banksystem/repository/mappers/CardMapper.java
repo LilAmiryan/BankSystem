@@ -1,4 +1,4 @@
-package com.example.banksystem.mappers;
+package com.example.banksystem.repository.mappers;
 
 import com.example.banksystem.dto.CardDto;
 import com.example.banksystem.dto.ClientDto;

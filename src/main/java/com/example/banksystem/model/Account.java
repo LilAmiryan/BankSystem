@@ -1,10 +1,9 @@
 package com.example.banksystem.model;
 
-import com.example.banksystem.repository.AccountRepository;
-import com.example.banksystem.service.AccountService;
-import lombok.*;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.math3.random.RandomDataGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;

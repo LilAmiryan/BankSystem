@@ -1,7 +1,7 @@
 package com.example.banksystem.service;
 
 import com.example.banksystem.dto.CardDto;
-import com.example.banksystem.mappers.CardMapper;
+import com.example.banksystem.repository.mappers.CardMapper;
 import com.example.banksystem.model.Card;
 import com.example.banksystem.repository.CardRepository;
 import org.apache.commons.math3.random.RandomDataGenerator;
