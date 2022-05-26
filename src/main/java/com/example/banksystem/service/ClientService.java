@@ -1,8 +1,7 @@
 package com.example.banksystem.service;
 
 import com.example.banksystem.dto.ClientDto;
-import com.example.banksystem.mappers.AddressMapper;
-import com.example.banksystem.mappers.ClientMapper;
+import com.example.banksystem.repository.mappers.ClientMapper;
 import com.example.banksystem.model.Client;
 import com.example.banksystem.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;

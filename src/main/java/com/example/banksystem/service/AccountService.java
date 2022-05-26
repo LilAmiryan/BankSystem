@@ -1,26 +1,20 @@
 package com.example.banksystem.service;
 
 import com.example.banksystem.dto.AccountDto;
-import com.example.banksystem.mappers.AccountMapper;
-import com.example.banksystem.mappers.ClientMapper;
+import com.example.banksystem.repository.mappers.AccountMapper;
+import com.example.banksystem.repository.mappers.ClientMapper;
 import com.example.banksystem.model.Account;
-import com.example.banksystem.model.Bank;
-import com.example.banksystem.model.Card;
-import com.example.banksystem.model.enumtypeofmodelfields.BankType;
 import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
 import com.example.banksystem.repository.AccountRepository;
 import com.example.banksystem.repository.BankRepository;
 import com.example.banksystem.repository.ClientRepository;
 import com.example.banksystem.response.account.AccountCreateResponse;
+import com.example.banksystem.response.account.AccountDeleteResponse;
+import com.example.banksystem.response.account.AccountUpdateResponse;
 import com.example.banksystem.validator.AccountValidator;
-import net.bytebuddy.utility.RandomString;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.math3.random.RandomDataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Optional;
 
 import static java.lang.String.valueOf;
 
@@ -71,6 +65,46 @@ public class AccountService {
         Account savedAccount = accountRepository.save(accountToSave);
         return new AccountCreateResponse(accountMapper.toAccountDto(savedAccount));
     }
+
+    public AccountDeleteResponse deleteAccount(String accountNumber) {
+        ErrorType errorType = null;
+        if (!accountValidator.isValidAccountNumber(accountNumber)) {
+            errorType = ErrorType.NOT_VALID;
+        } else {
+            if (!accountRepository.existsAccountByAccountNumber(accountNumber)) {
+                errorType = ErrorType.NOT_FOUND;
+            } else if (accountRepository.getAccountByAccountNumber(accountNumber).getAccountBalance() > 0) {
+                errorType = ErrorType.POSITIVE_BALANCE;
+            }
+        }
+        if (errorType != null) {
+            return new AccountDeleteResponse(errorType);
+        }
+        //Ready for delete
+        AccountDto deletedAccountDto = accountMapper.toAccountDto(
+                accountRepository.getAccountByAccountNumber(accountNumber));
+        accountRepository.delete(accountRepository.getAccountByAccountNumber(accountNumber));
+        return new AccountDeleteResponse(deletedAccountDto);
+    }
+
+    public AccountUpdateResponse updateAccount (String accountNumber){
+        ErrorType errorType = null;
+        if (!accountValidator.isValidAccountNumber(accountNumber)) {
+            errorType = ErrorType.NOT_VALID;
+        } else {
+            if (!accountRepository.existsAccountByAccountNumber(accountNumber)) {
+                errorType = ErrorType.NOT_FOUND;
+            } else if (accountRepository.getAccountByAccountNumber(accountNumber).getAccountBalance() > 0) {
+                errorType = ErrorType.POSITIVE_BALANCE;
+            }
+        }
+        if (errorType != null) {
+            return new AccountUpdateResponse(errorType);
+        }
+
+        return new AccountUpdateResponse(errorType);
+    }
+
 
     public String generateAccountNumber() {
         String accountNumber = null;

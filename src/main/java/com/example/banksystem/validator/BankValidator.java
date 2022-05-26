@@ -14,6 +14,5 @@ public class BankValidator {
                 bankDto.getBankType().equals(BankType.COOPERATIVE_BANK) ||
                 bankDto.getBankType().equals(BankType.COMMERCIAL_BANK) ||
                 bankDto.getBankType().equals(BankType.SPECIALISED_BANK));
-
     }
 }

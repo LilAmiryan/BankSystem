@@ -1,20 +1,9 @@
 package com.example.banksystem.service;
 
 import com.example.banksystem.dto.CardDto;
-import com.example.banksystem.dto.ClientDto;
-import com.example.banksystem.mappers.AccountMapper;
 import com.example.banksystem.mappers.CardMapper;
-import com.example.banksystem.mappers.ClientMapper;
-import com.example.banksystem.model.Account;
 import com.example.banksystem.model.Card;
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
-import com.example.banksystem.repository.AccountRepository;
-import com.example.banksystem.repository.BankRepository;
 import com.example.banksystem.repository.CardRepository;
-import com.example.banksystem.repository.ClientRepository;
-import com.example.banksystem.response.account.AccountCreateResponse;
-import com.example.banksystem.validator.AccountValidator;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.math3.random.RandomDataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

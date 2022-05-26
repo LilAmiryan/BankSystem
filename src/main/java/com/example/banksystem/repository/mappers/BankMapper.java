@@ -1,4 +1,4 @@
-package com.example.banksystem.mappers;
+package com.example.banksystem.repository.mappers;
 
 import com.example.banksystem.dto.BankDto;
 import com.example.banksystem.model.Bank;
