@@ -1,16 +1,14 @@
 package com.example.banksystem.controller;
 
-import com.example.banksystem.dto.AccountDto;
-import com.example.banksystem.dto.AddressDto;
 import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
 import com.example.banksystem.response.account.AccountCreateResponse;
-import com.example.banksystem.response.address.AddressCreateResponse;
 import com.example.banksystem.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/account/")
