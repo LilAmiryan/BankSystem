@@ -1,8 +1,8 @@
 package com.example.banksystem.model;
 
-import com.example.banksystem.model.enumtypeofmodelfields.BalanceType;
-import com.example.banksystem.model.enumtypeofmodelfields.CardStatusType;
-import com.example.banksystem.model.enumtypeofmodelfields.CardType;
+import com.example.banksystem.model.enums.BalanceType;
+import com.example.banksystem.model.enums.CardStatusType;
+import com.example.banksystem.model.enums.CardType;
 import lombok.*;
 import org.hibernate.Hibernate;
 

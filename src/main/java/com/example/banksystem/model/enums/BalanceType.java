@@ -1,4 +1,4 @@
-package com.example.banksystem.model.enumtypeofmodelfields;
+package com.example.banksystem.model.enums;
 
 public enum BalanceType {
     DEBIT(1, "DEBIT"),

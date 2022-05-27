@@ -4,7 +4,7 @@ import com.example.banksystem.dto.AccountDto;
 import com.example.banksystem.mappers.AccountMapper;
 import com.example.banksystem.mappers.ClientMapper;
 import com.example.banksystem.model.Account;
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
+import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.repository.AccountRepository;
 import com.example.banksystem.repository.BankRepository;
 import com.example.banksystem.repository.ClientRepository;

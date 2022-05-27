@@ -1,7 +1,7 @@
 package com.example.banksystem.controller;
 
-import com.example.banksystem.model.enumtypeofmodelfields.CardType;
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
+import com.example.banksystem.model.enums.CardType;
+import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.response.card.CardCreateResponse;
 import com.example.banksystem.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;

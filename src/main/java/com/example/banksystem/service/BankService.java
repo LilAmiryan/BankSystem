@@ -3,7 +3,7 @@ package com.example.banksystem.service;
 import com.example.banksystem.dto.BankDto;
 import com.example.banksystem.mappers.BankMapper;
 import com.example.banksystem.model.Bank;
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
+import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.repository.BankRepository;
 import com.example.banksystem.response.bank.BankUpdateResponse;
 import com.example.banksystem.validator.BankValidator;

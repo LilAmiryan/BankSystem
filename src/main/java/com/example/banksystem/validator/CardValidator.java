@@ -1,6 +1,6 @@
 package com.example.banksystem.validator;
 
-import com.example.banksystem.model.enumtypeofmodelfields.CardType;
+import com.example.banksystem.model.enums.CardType;
 import org.springframework.stereotype.Component;
 
 @Component

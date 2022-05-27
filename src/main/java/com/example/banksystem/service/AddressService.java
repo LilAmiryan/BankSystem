@@ -3,7 +3,7 @@ package com.example.banksystem.service;
 import com.example.banksystem.dto.AddressDto;
 import com.example.banksystem.mappers.AddressMapper;
 import com.example.banksystem.model.Address;
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
+import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.repository.AddressRepository;
 import com.example.banksystem.repository.ClientRepository;
 import com.example.banksystem.response.address.AddressDeleteResponse;

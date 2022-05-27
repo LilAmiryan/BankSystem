@@ -1,10 +1,10 @@
 package com.example.banksystem.service;
 
 import com.example.banksystem.model.Card;
-import com.example.banksystem.model.enumtypeofmodelfields.BalanceType;
-import com.example.banksystem.model.enumtypeofmodelfields.CardStatusType;
-import com.example.banksystem.model.enumtypeofmodelfields.CardType;
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
+import com.example.banksystem.model.enums.BalanceType;
+import com.example.banksystem.model.enums.CardStatusType;
+import com.example.banksystem.model.enums.CardType;
+import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.repository.AccountRepository;
 import com.example.banksystem.repository.CardRepository;
 import com.example.banksystem.repository.ClientRepository;

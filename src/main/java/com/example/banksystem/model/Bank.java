@@ -1,6 +1,6 @@
 package com.example.banksystem.model;
 
-import com.example.banksystem.model.enumtypeofmodelfields.BankType;
+import com.example.banksystem.model.enums.BankType;
 import lombok.*;
 import org.hibernate.Hibernate;
 

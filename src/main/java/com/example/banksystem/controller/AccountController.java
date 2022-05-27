@@ -1,6 +1,6 @@
 package com.example.banksystem.controller;
 
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
+import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.response.account.AccountBalanceDecreaseResponse;
 import com.example.banksystem.response.account.AccountBalanceIncreaseResponse;
 import com.example.banksystem.response.account.AccountCreateResponse;

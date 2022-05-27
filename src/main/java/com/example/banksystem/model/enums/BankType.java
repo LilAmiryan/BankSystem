@@ -1,4 +1,4 @@
-package com.example.banksystem.model.enumtypeofmodelfields;
+package com.example.banksystem.model.enums;
 
 public enum BankType {
     CENTRAL_BANK(1, "CENTRAL_BANK"),

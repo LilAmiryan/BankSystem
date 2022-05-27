@@ -1,7 +1,7 @@
 package com.example.banksystem.controller;
 
 import com.example.banksystem.dto.BankDto;
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
+import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.response.bank.BankDeleteResponse;
 import com.example.banksystem.response.bank.BankUpdateResponse;
 import com.example.banksystem.service.BankService;

@@ -1,7 +1,7 @@
 package com.example.banksystem.validator;
 
 import com.example.banksystem.dto.BankDto;
-import com.example.banksystem.model.enumtypeofmodelfields.BankType;
+import com.example.banksystem.model.enums.BankType;
 import org.springframework.stereotype.Component;
 
 @Component
