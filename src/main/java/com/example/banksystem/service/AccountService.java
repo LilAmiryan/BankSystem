@@ -8,9 +8,10 @@ import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
 import com.example.banksystem.repository.AccountRepository;
 import com.example.banksystem.repository.BankRepository;
 import com.example.banksystem.repository.ClientRepository;
+import com.example.banksystem.response.account.AccountBalanceDecreaseResponse;
 import com.example.banksystem.response.account.AccountCreateResponse;
 import com.example.banksystem.response.account.AccountDeleteResponse;
-import com.example.banksystem.response.account.AccountUpdateResponse;
+import com.example.banksystem.response.account.AccountBalanceIncreaseResponse;
 import com.example.banksystem.validator.AccountValidator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,22 +88,46 @@ public class AccountService {
         return new AccountDeleteResponse(deletedAccountDto);
     }
 
-    public AccountUpdateResponse updateAccount (String accountNumber){
+    public AccountBalanceIncreaseResponse increaseBalance(Double sum, String accountNumber) {
         ErrorType errorType = null;
         if (!accountValidator.isValidAccountNumber(accountNumber)) {
             errorType = ErrorType.NOT_VALID;
-        } else {
-            if (!accountRepository.existsAccountByAccountNumber(accountNumber)) {
-                errorType = ErrorType.NOT_FOUND;
-            } else if (accountRepository.getAccountByAccountNumber(accountNumber).getAccountBalance() > 0) {
-                errorType = ErrorType.POSITIVE_BALANCE;
-            }
+            return new AccountBalanceIncreaseResponse(errorType);
         }
-        if (errorType != null) {
-            return new AccountUpdateResponse(errorType);
+        if (!accountRepository.existsAccountByAccountNumber(accountNumber)) {
+            errorType = ErrorType.NOT_FOUND;
+            return new AccountBalanceIncreaseResponse(errorType);
         }
 
-        return new AccountUpdateResponse(errorType);
+        Account account = accountRepository.getAccountByAccountNumber(accountNumber);
+        Double accountBalance = account.getAccountBalance();
+        account.setAccountBalance(accountBalance + sum);
+        accountRepository.save(account);
+        AccountDto accountDto = accountMapper.toAccountDto(account);
+        return new AccountBalanceIncreaseResponse(accountDto);
+
+    }
+
+    public AccountBalanceDecreaseResponse decreaseBalance(Double sum, String accountNumber) {
+        ErrorType errorType = null;
+        if (!accountValidator.isValidAccountNumber(accountNumber)) {
+            errorType = ErrorType.NOT_VALID;
+            return new AccountBalanceDecreaseResponse(errorType);
+        }
+        if (!accountRepository.existsAccountByAccountNumber(accountNumber)) {
+            errorType = ErrorType.NOT_FOUND;
+            return new AccountBalanceDecreaseResponse(errorType);
+        }
+        if (accountRepository.getAccountByAccountNumber(accountNumber).getAccountBalance() < sum) {
+            errorType = ErrorType.INSUFFICIENT_BALANCE;
+            return new AccountBalanceDecreaseResponse(errorType);
+        }
+        Account account = accountRepository.getAccountByAccountNumber(accountNumber);
+        Double accountBalance = account.getAccountBalance();
+        account.setAccountBalance(accountBalance - sum);
+        accountRepository.save(account);
+        AccountDto accountDto = accountMapper.toAccountDto(account);
+        return new AccountBalanceDecreaseResponse(accountDto);
     }
 
 

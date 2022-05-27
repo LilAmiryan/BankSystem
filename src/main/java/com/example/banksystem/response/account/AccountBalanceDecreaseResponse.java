@@ -5,15 +5,15 @@ import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class AccountDeleteResponse {
+public class AccountBalanceDecreaseResponse {
     private ErrorType errorType;
     private AccountDto accountDto;
 
-    public AccountDeleteResponse(ErrorType errorType) {
+    public AccountBalanceDecreaseResponse(ErrorType errorType) {
         this.errorType = errorType;
     }
 
-    public AccountDeleteResponse(AccountDto accountDto) {
+    public AccountBalanceDecreaseResponse(AccountDto accountDto) {
         this.accountDto = accountDto;
     }
 
@@ -25,8 +25,8 @@ public class AccountDeleteResponse {
                     body("Input valid account number ");
             case NOT_FOUND -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body("No account with such account number.");
-            case POSITIVE_BALANCE -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body("This account have positive balance.Give him his MONEY.");
+            case INSUFFICIENT_BALANCE -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body("Insufficient balance.");
             default -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Unknown error");
         }
@@ -34,11 +34,15 @@ public class AccountDeleteResponse {
     }
 
     public ResponseEntity<?> onSuccess() {
-        return ResponseEntity.ok().body("Account deleted");
+        return ResponseEntity.ok().body("Success");
     }
 
 
     public ErrorType getErrorType() {
         return errorType;
+    }
+
+    public AccountDto getAccountDto() {
+        return accountDto;
     }
 }

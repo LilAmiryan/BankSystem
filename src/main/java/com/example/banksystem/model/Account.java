@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -40,7 +41,6 @@ public class Account {
     @Column(name = "account_number", length = 16, unique = true, nullable = false)
     @Pattern(regexp = "^[0-9]{16}", message = "length must be 16")
     private String accountNumber;
-
 
     @Override
     public boolean equals(Object o) {

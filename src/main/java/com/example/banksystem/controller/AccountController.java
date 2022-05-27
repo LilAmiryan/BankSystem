@@ -1,6 +1,8 @@
 package com.example.banksystem.controller;
 
 import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
+import com.example.banksystem.response.account.AccountBalanceDecreaseResponse;
+import com.example.banksystem.response.account.AccountBalanceIncreaseResponse;
 import com.example.banksystem.response.account.AccountCreateResponse;
 import com.example.banksystem.response.account.AccountDeleteResponse;
 import com.example.banksystem.service.AccountService;
@@ -31,7 +33,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/{accountNumber}")
-    public ResponseEntity<?> deleteAddress(@PathVariable("accountNumber") String accountNumber) {
+    public ResponseEntity<?> deleteAccount(@PathVariable("accountNumber") String accountNumber) {
         AccountDeleteResponse deleteResponse =
                 accountService.deleteAccount(accountNumber);
 
@@ -40,5 +42,29 @@ public class AccountController {
             return deleteResponse.onFailure(deleteErrorType);
         }
         return deleteResponse.onSuccess();
+    }
+
+    @PutMapping("/increaseBalance/{accountNumber}")
+    public ResponseEntity<?> increaseBalance(@RequestParam Double sum, @PathVariable String accountNumber) {
+        AccountBalanceIncreaseResponse increaseResponse =
+                accountService.increaseBalance(sum, accountNumber);
+
+        ErrorType increaseErrorType = increaseResponse.getErrorType();
+        if (increaseErrorType != null) {
+            return increaseResponse.onFailure(increaseErrorType);
+        }
+        return increaseResponse.onSuccess();
+    }
+
+    @PutMapping("/decreaseBalance/{accountNumber}")
+    public ResponseEntity<?> decreaseBalance(@RequestParam Double sum, @PathVariable String accountNumber) {
+        AccountBalanceDecreaseResponse decreaseResponse =
+                accountService.decreaseBalance(sum, accountNumber);
+
+        ErrorType increaseErrorType = decreaseResponse.getErrorType();
+        if (increaseErrorType != null) {
+            return decreaseResponse.onFailure(increaseErrorType);
+        }
+        return decreaseResponse.onSuccess();
     }
 }
