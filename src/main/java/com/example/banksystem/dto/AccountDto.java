@@ -1,7 +1,5 @@
 package com.example.banksystem.dto;
 
-import com.example.banksystem.model.Bank;
-import com.example.banksystem.model.Client;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

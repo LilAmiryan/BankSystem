@@ -24,6 +24,6 @@ public interface ClientRepository extends JpaRepository<Client,Long> {
     boolean existsByAddress_AddressId(Long id);
     boolean existsClientByClientId(Long id);
 
-
+    Client getClientByClientId(Long id);
 
 }

@@ -1,8 +1,8 @@
 package com.example.banksystem.service;
 
 import com.example.banksystem.dto.AccountDto;
-import com.example.banksystem.repository.mappers.AccountMapper;
-import com.example.banksystem.repository.mappers.ClientMapper;
+import com.example.banksystem.mappers.AccountMapper;
+import com.example.banksystem.mappers.ClientMapper;
 import com.example.banksystem.model.Account;
 import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
 import com.example.banksystem.repository.AccountRepository;
