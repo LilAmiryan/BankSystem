@@ -1,19 +1,19 @@
-package com.example.banksystem.response.account;
+package com.example.banksystem.response.card;
 
-import com.example.banksystem.dto.AccountDto;
+import com.example.banksystem.dto.CardDto;
 import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class AccountCreateResponse {
-    ErrorType errorType;
-    private AccountDto accountDto;
+public class CardCreateResponse {
+    private ErrorType errorType;
+    private CardDto cardDto;
 
-    public AccountCreateResponse(AccountDto accountDto) {
-        this.accountDto = accountDto;
+    public CardCreateResponse(CardDto cardDto) {
+        this.cardDto = cardDto;
     }
 
-    public AccountCreateResponse(ErrorType errorType) {
+    public CardCreateResponse(ErrorType errorType) {
         this.errorType = errorType;
     }
 
@@ -24,21 +24,19 @@ public class AccountCreateResponse {
                     body("No client with such Id.");
             case NOT_VALID -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body("Input parameter(s) are wrong.");
+            case NOT_VALID_ACCOUNT -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body("No account with such IBAN");
             default -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Unknown error");
         }
-
         return response;
     }
-    public ResponseEntity<AccountDto> onSuccess() {
-        return ResponseEntity.ok().body(accountDto);
+
+    public ResponseEntity<CardDto> onSuccess() {
+        return ResponseEntity.ok().body(cardDto);
     }
 
     public ErrorType getErrorType() {
         return errorType;
-    }
-
-    public AccountDto getAccountDto() {
-        return accountDto;
     }
 }

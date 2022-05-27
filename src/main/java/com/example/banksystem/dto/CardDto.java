@@ -25,5 +25,5 @@ public class CardDto {
 
     private String codeCVC;
     private CardStatusType status;
-
+    private AccountDto accountDto;
 }

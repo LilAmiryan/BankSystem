@@ -21,6 +21,7 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cardId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "card_type", nullable = false)
     private CardType cardType;    //ENUM
 
@@ -44,6 +45,7 @@ public class Card {
     @Column(name = "code_cvc", nullable = false)
     private String codeCVC;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private CardStatusType status;        //ENUM
 

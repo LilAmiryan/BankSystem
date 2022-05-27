@@ -1,9 +1,9 @@
 package com.example.banksystem.model.enumtypeofmodelfields;
 
 public enum CardStatusType {
-    CREATED(1, "CREATED"),
-    ACTIVE(2, "ACTIVE"),
-    BLOCKED(3, "BLOCKED");
+    CREATED(0, "ACTIVE"),
+    ACTIVE(1, "BLOCKED"),
+    BLOCKED(2, "EXPIRED");
 
     private final int id;
     private final String type;
