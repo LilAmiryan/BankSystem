@@ -20,12 +20,9 @@ public class ClientValidator {
     }
 
     public boolean isValidClient(ClientDto clientDto) {
-        String validEmail= String.valueOf(validateEmail(clientDto.getEmail()));
-
-
         return ((addressValidator.isValidAddress(clientDto.getAddressDto())
-                &&  validateEmail(clientDto.getEmail())
-                &&  !(clientDto.getDateOfBirth() == null
+                && validateEmail(clientDto.getEmail())
+                && !(clientDto.getDateOfBirth() == null
                 || clientDto.getFirstName() == null
                 || clientDto.getLastName() == null
                 || clientDto.getPhoneNumber() == null

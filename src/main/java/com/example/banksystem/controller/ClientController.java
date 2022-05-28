@@ -1,22 +1,20 @@
 package com.example.banksystem.controller;
 
 import com.example.banksystem.dto.ClientDto;
-import com.example.banksystem.model.Client;
 import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.response.client.ClientCreateResponse;
 import com.example.banksystem.response.client.ClientDeleteResponse;
+import com.example.banksystem.response.client.ClientUpdateResponse;
 import com.example.banksystem.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/client")
 public class ClientController {
 
-    private ClientService clientService;
+    private final ClientService clientService;
 
     @Autowired
     public ClientController(ClientService clientService) {
@@ -26,11 +24,12 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<?> createClient(@RequestBody ClientDto clientDto) {
         ClientCreateResponse clientCreateResponse = clientService.createClient(clientDto);
+        ErrorType errorType = clientCreateResponse.getErrorType();
 
         if (clientCreateResponse.getErrorType() != null) {
-            return new ClientCreateResponse(clientDto).onFailure();
+            return new ClientCreateResponse().onFailure(errorType);
         }
-        return new ClientCreateResponse(clientDto).onSuccess();
+        return clientCreateResponse.onSuccess(clientDto);
     }
 
 
@@ -44,19 +43,13 @@ public class ClientController {
         return deleteResponse.onSuccess();
     }
 
-
-    public Optional<ClientDto> updateClient(ClientDto clientDto, Long id) {
-
-//        if (clientValidator.isValidClient(clientDto)) {
-//            if (!clientRepository.existsById(id)) {
-//                new Exception("There is no such client");
-//            }
-//            Client client = clientMapper.toClient(clientDto);
-//            client.setClientId(id);
-//            Client updatedClient = clientRepository.save(client);
-//            return Optional.of(clientMapper.toClientDto(updatedClient));
-//        }
-        return Optional.empty();
-
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateClient(@RequestBody ClientDto clientDto, @PathVariable("id") Long id) {
+        ClientUpdateResponse clientUpdateResponse = clientService.updateClient(clientDto, id);
+        ErrorType errorType = clientUpdateResponse.getErrorType();
+        if (errorType != null) {
+            return clientUpdateResponse.onFailure(errorType);
+        }
+        return clientUpdateResponse.onSuccess();
     }
 }
