@@ -1,5 +1,7 @@
 package com.example.banksystem.service;
 
+import com.example.banksystem.dto.AccountDto;
+import com.example.banksystem.model.Account;
 import com.example.banksystem.model.Card;
 import com.example.banksystem.model.enums.BalanceType;
 import com.example.banksystem.model.enums.CardStatusType;
@@ -10,7 +12,10 @@ import com.example.banksystem.repository.CardRepository;
 import com.example.banksystem.repository.ClientRepository;
 import com.example.banksystem.mappers.AccountMapper;
 import com.example.banksystem.mappers.CardMapper;
+import com.example.banksystem.response.account.AccountBalanceDecreaseResponse;
 import com.example.banksystem.response.card.CardCreateResponse;
+import com.example.banksystem.response.card.TransferFromCardToAccountResponse;
+import com.example.banksystem.validator.AccountValidator;
 import com.example.banksystem.validator.CardValidator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +37,14 @@ public class CardService {
     private AccountRepository accountRepository;
     private AccountService accountService;
     private AccountMapper accountMapper;
+    private AccountValidator accountValidator;
     private static final AES aes = new AES();
 
     @Autowired
     public CardService(CardRepository cardRepository, CardMapper cardMapper, ClientRepository clientRepository,
                        CardValidator cardValidator, AccountRepository accountRepository,
-                       AccountService accountService, AccountMapper accountMapper) {
+                       AccountService accountService, AccountMapper accountMapper,
+                       AccountValidator accountValidator) {
         this.cardRepository = cardRepository;
         this.cardMapper = cardMapper;
         this.clientRepository = clientRepository;
@@ -45,6 +52,7 @@ public class CardService {
         this.accountRepository = accountRepository;
         this.accountService = accountService;
         this.accountMapper = accountMapper;
+        this.accountValidator = accountValidator;
     }
 
     public CardCreateResponse createCard(Long clientId, CardType cardType, String iban) {
@@ -81,6 +89,35 @@ public class CardService {
 
         Card savedCard = cardRepository.save(cardToSave);
         return new CardCreateResponse(cardMapper.toCardDto(savedCard));
+    }
+
+
+    public TransferFromCardToAccountResponse
+    transferFromCardToAccountResponse(Double amount, String fromCardNumber, String toAccountNumber) {
+        ErrorType errorType = null;
+        if (!cardValidator.isValidCardNumber(fromCardNumber) ||
+        !accountValidator.isValidAccountNumber(toAccountNumber)){
+            errorType = ErrorType.NOT_VALID;
+            return new TransferFromCardToAccountResponse(errorType);
+        }
+        if (!cardRepository.existsCardByCardNumber(fromCardNumber) ||
+                !accountRepository.existsAccountByAccountNumber(toAccountNumber)){
+             errorType = ErrorType.NOT_FOUND;
+             return new TransferFromCardToAccountResponse(errorType);
+        }
+        Account fromAccount = cardRepository.getAccountByCardNumber(fromCardNumber);
+        if (fromAccount.getAccountBalance() < amount) {
+            errorType = ErrorType.INSUFFICIENT_BALANCE;
+            return new TransferFromCardToAccountResponse(errorType);
+        }
+
+        fromAccount.setAccountBalance(fromAccount.getAccountBalance() - amount);
+        accountRepository.save(fromAccount);
+        Account toAccount = accountRepository.getAccountByAccountNumber(toAccountNumber);
+        toAccount.setAccountBalance(toAccount.getAccountBalance()+amount);
+        accountRepository.save(toAccount);
+                return new TransferFromCardToAccountResponse();
+
     }
 
     public String generateCardNumber() {
