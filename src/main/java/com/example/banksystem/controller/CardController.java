@@ -4,6 +4,7 @@ import com.example.banksystem.model.enums.CardType;
 import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.response.card.CardCreateResponse;
 import com.example.banksystem.response.card.TransferFromCardToAccountResponse;
+import com.example.banksystem.response.card.TransferFromCardToCardResponse;
 import com.example.banksystem.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,9 +49,9 @@ public class CardController {
     @PutMapping("/transferCardCard")
     public ResponseEntity<?> transferFromCardToCard(@RequestParam Double amount,
                                                        @RequestParam String fromCardNumber,
-                                                       @RequestParam String toAccountNumber) {
-        TransferFromCardToAccountResponse transferResponse = cardService.
-                transferFromCardToAccount(amount, fromCardNumber, toAccountNumber);
+                                                       @RequestParam String toCardNumber) {
+        TransferFromCardToCardResponse transferResponse = cardService.
+                transferFromCardToCard(amount, fromCardNumber, toCardNumber);
         ErrorType errorType = transferResponse.getErrorType();
         if (errorType != null) {
             return transferResponse.onFailure(errorType);
