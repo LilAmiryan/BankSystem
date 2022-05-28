@@ -36,7 +36,21 @@ public class CardController {
                                                        @RequestParam String fromCardNumber,
                                                        @RequestParam String toAccountNumber) {
         TransferFromCardToAccountResponse transferResponse = cardService.
-                transferFromCardToAccountResponse(amount, fromCardNumber, toAccountNumber);
+                transferFromCardToAccount(amount, fromCardNumber, toAccountNumber);
+        ErrorType errorType = transferResponse.getErrorType();
+        if (errorType != null) {
+            return transferResponse.onFailure(errorType);
+        }
+        return transferResponse.onSuccess();
+
+    }
+
+    @PutMapping("/transferCardCard")
+    public ResponseEntity<?> transferFromCardToCard(@RequestParam Double amount,
+                                                       @RequestParam String fromCardNumber,
+                                                       @RequestParam String toAccountNumber) {
+        TransferFromCardToAccountResponse transferResponse = cardService.
+                transferFromCardToAccount(amount, fromCardNumber, toAccountNumber);
         ErrorType errorType = transferResponse.getErrorType();
         if (errorType != null) {
             return transferResponse.onFailure(errorType);

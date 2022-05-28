@@ -128,7 +128,6 @@ public class AccountService {
         return new AccountBalanceDecreaseResponse(accountDto);
     }
 
-
     public String generateAccountNumber() {
         String accountNumber = null;
         do {
@@ -146,6 +145,5 @@ public class AccountService {
         } while (accountRepository.existsAccountByIban(iban));
         return iban;
     }
-
 
 }
