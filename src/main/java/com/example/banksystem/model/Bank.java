@@ -1,10 +1,11 @@
 package com.example.banksystem.model;
 
-import com.example.banksystem.model.enumtypeofmodelfields.BankType;
+import com.example.banksystem.model.enums.BankType;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +16,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,16 +27,15 @@ public class Bank {
     @Column(name = "bank_name", length = 30, nullable = false)
     private String bankName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "bank_type", length = 30, nullable = false)
     private BankType bankType;    //ENUM
 
     @OneToMany(mappedBy = "bank", cascade = CascadeType.PERSIST)
-    @ToString.Exclude
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
 
     @OneToMany(mappedBy = "bank", cascade = CascadeType.PERSIST)
-    @ToString.Exclude
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

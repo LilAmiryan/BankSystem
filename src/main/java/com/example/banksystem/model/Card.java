@@ -1,10 +1,9 @@
 package com.example.banksystem.model;
 
-import com.example.banksystem.model.enumtypeofmodelfields.BalanceType;
-import com.example.banksystem.model.enumtypeofmodelfields.CardStatusType;
-import com.example.banksystem.model.enumtypeofmodelfields.CardType;
+import com.example.banksystem.model.enums.BalanceType;
+import com.example.banksystem.model.enums.CardStatusType;
+import com.example.banksystem.model.enums.CardType;
 import lombok.*;
-import org.apache.commons.math3.random.RandomDataGenerator;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -17,20 +16,20 @@ import java.util.Objects;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cardId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "card_type", nullable = false)
     private CardType cardType;    //ENUM
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id", foreignKey = @ForeignKey(name = "fk_Bank_Card_ManyToOne"))
-    @ToString.Exclude
     private Bank bank;        //fk_Bank_Card_ManyToOne
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "balance_type", nullable = false)
     private BalanceType balanceType;    //(Default -DEBIT)
 
@@ -46,6 +45,7 @@ public class Card {
     @Column(name = "code_cvc", nullable = false)
     private String codeCVC;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private CardStatusType status;        //ENUM
 
@@ -54,13 +54,11 @@ public class Card {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "fk_card_account_oneToOne"))
-    @ToString.Exclude
     private Account account;    //fk_card_account_oneToOne
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", foreignKey = @ForeignKey(name = "fk_Client_card_ManyToOne"))
-    @ToString.Exclude
     private Client client;        //fk_Client_card_ManyToOne
 
     @Override

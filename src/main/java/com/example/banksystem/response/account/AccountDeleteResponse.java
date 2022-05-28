@@ -1,23 +1,20 @@
-package com.example.banksystem.response.address;
+package com.example.banksystem.response.account;
 
-import com.example.banksystem.dto.AddressDto;
+import com.example.banksystem.dto.AccountDto;
 import com.example.banksystem.model.enums.ErrorType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class AddressUpdateResponse {
-
-    private AddressDto addressDto;
+public class AccountDeleteResponse {
     private ErrorType errorType;
+    private AccountDto accountDto;
 
-
-    public AddressUpdateResponse(ErrorType errorType) {
+    public AccountDeleteResponse(ErrorType errorType) {
         this.errorType = errorType;
     }
 
-
-    public AddressUpdateResponse(AddressDto addressDto) {
-        this.addressDto = addressDto;
+    public AccountDeleteResponse(AccountDto accountDto) {
+        this.accountDto = accountDto;
     }
 
 
@@ -25,21 +22,23 @@ public class AddressUpdateResponse {
         ResponseEntity<?> response;
         switch (errorType) {
             case NOT_VALID -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body("Input parameter(s) are wrong.");
+                    body("Input valid account number ");
             case NOT_FOUND -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body("No address with such Id.");
+                    body("No account with such account number.");
+            case POSITIVE_BALANCE -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body("This account have positive balance.Give him his MONEY.");
             default -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Unknown error");
         }
         return response;
     }
 
-    public ResponseEntity<AddressDto> onSuccess() {
-        return ResponseEntity.ok().body(addressDto);
+    public ResponseEntity<?> onSuccess() {
+        return ResponseEntity.ok().body("Account deleted");
     }
+
 
     public ErrorType getErrorType() {
         return errorType;
     }
-
 }

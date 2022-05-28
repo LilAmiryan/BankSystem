@@ -1,9 +1,14 @@
 package com.example.banksystem.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @Entity
@@ -12,19 +17,18 @@ import java.util.Objects;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
-    @Column(name = "iban",length = 30, unique = true, nullable = false)
+    @Column(name = "iban", length = 12, unique = true, nullable = false)
+    @Pattern(regexp = "[a-zA-Z]{2}[0-9]{2}[a-zA-Z0-9]{8}", message = "length must be 12")
     private String iban;        //Unique
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id", foreignKey = @ForeignKey(name = "fk_Bank_Account_ManyToOne"))
-    @ToString.Exclude
     private Bank bank;    //	fk_Bank_Account_ManyToOne
 
     @Column(name = "account_balance")
@@ -32,11 +36,11 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", foreignKey = @ForeignKey(name = "fk_client_account_ManyToOne"))
-    @ToString.Exclude
-    private  Client client; //fk_client_account_ManyToOne
+    private Client client; //fk_client_account_ManyToOne
 
-    @Column(name = "account_number",length = 40, unique = true, nullable = false)
-    private String accountNumber; //Unique
+    @Column(name = "account_number", length = 16, unique = true, nullable = false)
+    @Pattern(regexp = "^[0-9]{16}", message = "length must be 16")
+    private String accountNumber;
 
     @Override
     public boolean equals(Object o) {
@@ -50,4 +54,6 @@ public class Account {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.banksystem.controller;
 
 import com.example.banksystem.dto.ClientDto;
+import com.example.banksystem.model.Client;
 import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
 import com.example.banksystem.response.client.ClientCreateResponse;
 import com.example.banksystem.response.client.ClientDeleteResponse;
@@ -43,4 +44,19 @@ public class ClientController {
         return deleteResponse.onSuccess();
     }
 
+
+    public Optional<ClientDto> updateClient(ClientDto clientDto, Long id) {
+
+//        if (clientValidator.isValidClient(clientDto)) {
+//            if (!clientRepository.existsById(id)) {
+//                new Exception("There is no such client");
+//            }
+//            Client client = clientMapper.toClient(clientDto);
+//            client.setClientId(id);
+//            Client updatedClient = clientRepository.save(client);
+//            return Optional.of(clientMapper.toClientDto(updatedClient));
+//        }
+        return Optional.empty();
+
+    }
 }

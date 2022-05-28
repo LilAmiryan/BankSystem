@@ -1,6 +1,6 @@
 package com.example.banksystem.dto;
 
-import com.example.banksystem.model.Bank;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +11,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountDto {
-    private String iban;
-    private Bank bank;
-    private Double accountBalance;
+    @JsonProperty("bank")
+    private BankDto bankDto;
+
+    @JsonProperty("client")
+    private ClientDto clientDto;
     private String accountNumber;
+    private Double accountBalance;
+    private String iban;
 
 }

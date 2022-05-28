@@ -17,25 +17,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ClientDto {
     private String firstName;
-
     private String lastName;
-
     private String ssn;	//Unique
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dateOfBirth;
-
     private String phoneNumber;
-
-
-    @Email(message = "Email must be valid!")
     private String email;
-
-    @JsonProperty("address")
     private AddressDto addressDto;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate registerDate;
-
-
 }

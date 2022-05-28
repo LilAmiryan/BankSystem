@@ -1,45 +1,42 @@
-package com.example.banksystem.response.address;
+package com.example.banksystem.response.card;
 
-import com.example.banksystem.dto.AddressDto;
+import com.example.banksystem.dto.CardDto;
 import com.example.banksystem.model.enums.ErrorType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class AddressUpdateResponse {
-
-    private AddressDto addressDto;
+public class CardCreateResponse {
     private ErrorType errorType;
+    private CardDto cardDto;
 
+    public CardCreateResponse(CardDto cardDto) {
+        this.cardDto = cardDto;
+    }
 
-    public AddressUpdateResponse(ErrorType errorType) {
+    public CardCreateResponse(ErrorType errorType) {
         this.errorType = errorType;
     }
-
-
-    public AddressUpdateResponse(AddressDto addressDto) {
-        this.addressDto = addressDto;
-    }
-
 
     public ResponseEntity<?> onFailure(ErrorType errorType) {
         ResponseEntity<?> response;
         switch (errorType) {
+            case NOT_FOUND -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body("No client with such Id.");
             case NOT_VALID -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body("Input parameter(s) are wrong.");
-            case NOT_FOUND -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body("No address with such Id.");
+            case NOT_VALID_ACCOUNT -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body("No account with such IBAN");
             default -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Unknown error");
         }
         return response;
     }
 
-    public ResponseEntity<AddressDto> onSuccess() {
-        return ResponseEntity.ok().body(addressDto);
+    public ResponseEntity<CardDto> onSuccess() {
+        return ResponseEntity.ok().body(cardDto);
     }
 
     public ErrorType getErrorType() {
         return errorType;
     }
-
 }

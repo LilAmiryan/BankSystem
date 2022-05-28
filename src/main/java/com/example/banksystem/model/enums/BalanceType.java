@@ -1,4 +1,4 @@
-package com.example.banksystem.model.enumtypeofmodelfields;
+package com.example.banksystem.model.enums;
 
 public enum BalanceType {
     DEBIT(1, "DEBIT"),
@@ -12,7 +12,7 @@ public enum BalanceType {
         this.type = type;
     }
 
-    public BalanceType findById(int id) {
+    public static BalanceType findById(int id) {
         for (BalanceType type : values()) {
             if (type.id == id) {
                 return type;

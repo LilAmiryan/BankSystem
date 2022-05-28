@@ -1,11 +1,13 @@
 package com.example.banksystem.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,6 +31,7 @@ public class Client {
     @Column(name = "ssn", length = 30, nullable = false, unique = true)
     private String ssn;    //Unique
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
@@ -39,18 +42,19 @@ public class Client {
     @Column(name = "email", length = 30, nullable = false)
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id",
             foreignKey = @ForeignKey(name = "fk_address_client_ManyToOne"))
     private Address address;    //	fk_address_client_ManyToOne
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST)
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.PERSIST)
-    private List<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
 
     @Column(name = "register_date", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate registerDate;
 
     @Override

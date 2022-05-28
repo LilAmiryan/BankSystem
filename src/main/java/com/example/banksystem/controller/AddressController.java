@@ -1,7 +1,7 @@
 package com.example.banksystem.controller;
 
 import com.example.banksystem.dto.AddressDto;
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
+import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,6 @@ import com.example.banksystem.response.address.AddressDeleteResponse;
 import com.example.banksystem.response.address.AddressUpdateResponse;
 
 import java.util.Optional;
-
 
 @RestController
 @RequestMapping("/api/address")

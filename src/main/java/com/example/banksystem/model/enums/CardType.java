@@ -1,4 +1,4 @@
-package com.example.banksystem.model.enumtypeofmodelfields;
+package com.example.banksystem.model.enums;
 
 public enum CardType {
     MASTER_CARD(1, "MASTER_CARD"),
