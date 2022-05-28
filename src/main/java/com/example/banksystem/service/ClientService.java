@@ -6,7 +6,7 @@ import com.example.banksystem.mappers.AddressMapper;
 import com.example.banksystem.mappers.ClientMapper;
 import com.example.banksystem.model.Address;
 import com.example.banksystem.model.Client;
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
+import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.repository.AccountRepository;
 import com.example.banksystem.repository.AddressRepository;
 import com.example.banksystem.repository.CardRepository;
@@ -15,10 +15,7 @@ import com.example.banksystem.response.client.ClientCreateResponse;
 import com.example.banksystem.response.client.ClientDeleteResponse;
 import com.example.banksystem.validator.ClientValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class ClientService {
@@ -70,6 +67,7 @@ public class ClientService {
         if (!addressRepository.addressExists(address)) {
             address = addressMapper.toAddress(addressService.createAddress(addressDto).get());
         }
+
         savedClient = clientMapper.toClient(clientDto);
         savedClient.setAddress(address);
 

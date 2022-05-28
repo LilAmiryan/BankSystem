@@ -1,8 +1,7 @@
 package com.example.banksystem.response.client;
 
-import com.example.banksystem.dto.AddressDto;
 import com.example.banksystem.dto.ClientDto;
-import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
+import com.example.banksystem.model.enums.ErrorType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

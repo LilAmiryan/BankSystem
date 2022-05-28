@@ -3,7 +3,6 @@ package com.example.banksystem.validator;
 import com.example.banksystem.dto.ClientDto;
 import org.springframework.stereotype.Component;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
