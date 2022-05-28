@@ -1,7 +1,6 @@
 package com.example.banksystem.model.enums;
 
 public enum CardStatusType {
-    CREATED(0, "ACTIVE"),
     ACTIVE(1, "BLOCKED"),
     BLOCKED(2, "EXPIRED");
 

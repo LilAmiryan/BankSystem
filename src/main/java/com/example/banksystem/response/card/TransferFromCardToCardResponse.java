@@ -24,6 +24,8 @@ public class TransferFromCardToCardResponse {
                     body("No account or card with such account or card number.");
             case INSUFFICIENT_BALANCE -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body("Insufficient balance.");
+            case BLOCKED -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body("One of the cards is blocked");
             default -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Unknown error");
         }

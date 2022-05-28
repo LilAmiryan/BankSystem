@@ -69,22 +69,36 @@ public class CardService {
         cardToSave.setBalanceType(BalanceType.DEBIT);
         cardToSave.setCardNumber(generateCardNumber());
         cardToSave.setCreditBalance(0.0);
-        cardToSave.setStatus(CardStatusType.ACTIVE);
         cardToSave.setCodeCVC(generateCodeCVC());
         cardToSave.setClient(clientRepository.getClientByClientId(clientId));
         cardToSave.setAccount(accountRepository.getAccountByIban(iban));
         cardToSave.setExpireDate(LocalDate.now().plusYears(2));
-
         cardToSave.setPin(encryptedPin);
+
+        cardToSave.setStatus(activateCard());
 
         Card savedCard = cardRepository.save(cardToSave);
         return new CardCreateResponse(cardMapper.toCardDto(savedCard));
+    }
+
+    public CardStatusType activateCard() {
+        return CardStatusType.ACTIVE;
+    }
+
+    public CardStatusType blockCard() {
+        return CardStatusType.BLOCKED;
     }
 
 
     public TransferFromCardToAccountResponse
     transferFromCardToAccount(Double amount, String fromCardNumber, String toAccountNumber) {
         ErrorType errorType = null;
+
+        if (cardRepository.getCardByCardNumber(fromCardNumber).getStatus() == CardStatusType.BLOCKED) {
+            errorType = ErrorType.BLOCKED;
+            return new TransferFromCardToAccountResponse(errorType);
+        }
+
         if (!cardValidator.isValidCardNumber(fromCardNumber) ||
                 !accountValidator.isValidAccountNumber(toAccountNumber)) {
             errorType = ErrorType.NOT_VALID;
@@ -113,6 +127,13 @@ public class CardService {
     public TransferFromCardToCardResponse
     transferFromCardToCard(Double amount, String fromCardNumber, String toCardNumber) {
         ErrorType errorType = null;
+
+        if (cardRepository.getCardByCardNumber(fromCardNumber).getStatus() == CardStatusType.BLOCKED ||
+            cardRepository.getCardByCardNumber(toCardNumber).getStatus() == CardStatusType.BLOCKED) {
+            errorType = ErrorType.BLOCKED;
+            return new TransferFromCardToCardResponse(errorType);
+        }
+
         if (!cardValidator.isValidCardNumber(fromCardNumber) ||
                 !cardValidator.isValidCardNumber(toCardNumber)) {
             errorType = ErrorType.NOT_VALID;
