@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
     public boolean existsCardByCardNumber(String cardNumber);
+    public Account getAccountByCardNumber(String cardNumber);
+    boolean existsByClient_clientId(Long id);
 
     public Card getCardByCardNumber(String cardNumber);
 }
