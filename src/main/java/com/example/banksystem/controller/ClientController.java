@@ -1,14 +1,13 @@
 package com.example.banksystem.controller;
 
 import com.example.banksystem.dto.ClientDto;
+import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
 import com.example.banksystem.response.client.ClientCreateResponse;
+import com.example.banksystem.response.client.ClientDeleteResponse;
 import com.example.banksystem.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -25,16 +24,23 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<?> createClient(@RequestBody ClientDto clientDto) {
+        ClientCreateResponse clientCreateResponse = clientService.createClient(clientDto);
 
-        if (clientDto == null) {
-            return new ClientCreateResponse().onFailure();
+        if (clientCreateResponse.getErrorType() != null) {
+            return new ClientCreateResponse(clientDto).onFailure();
         }
-
-        Optional<ClientDto> optionalClientDto = clientService.createClient(clientDto);
-        if (optionalClientDto.isEmpty()) {
-            return new ClientCreateResponse().onFailure();
-        }
-
-        return new ClientCreateResponse(optionalClientDto.get()).onSuccess();
+        return new ClientCreateResponse(clientDto).onSuccess();
     }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteClient(@PathVariable("id") Long id) {
+        ClientDeleteResponse deleteResponse = clientService.deleteClient(id);
+        ErrorType deleteErrorType = deleteResponse.getErrorType();
+        if (deleteErrorType != null) {
+            return deleteResponse.onFailure(deleteErrorType);
+        }
+        return deleteResponse.onSuccess();
+    }
+
 }

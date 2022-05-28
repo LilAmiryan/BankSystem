@@ -1,19 +1,29 @@
 package com.example.banksystem.response.client;
 import com.example.banksystem.dto.ClientDto;
+import com.example.banksystem.model.enumtypeofmodelfields.ErrorType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class ClientCreateResponse {
     private ClientDto clientDto;
+    private ErrorType errorType;
 
-    public ClientCreateResponse(){}
     public ClientCreateResponse(ClientDto clientDto){
         this.clientDto=clientDto;
     }
 
+    public ClientCreateResponse(ErrorType errorType) {
+        this.errorType = errorType;
+    }
+
+
     public ResponseEntity<?> onFailure() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("Client already exists.");
+                .body("Input parameter(s) are wrong.");
+    }
+
+    public ErrorType getErrorType() {
+        return errorType;
     }
 
     public ResponseEntity<ClientDto> onSuccess() {
