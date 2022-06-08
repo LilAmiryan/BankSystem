@@ -8,6 +8,7 @@ import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.repository.AccountRepository;
 import com.example.banksystem.repository.BankRepository;
 import com.example.banksystem.repository.ClientRepository;
+import com.example.banksystem.response.TransferFromAccountToAccountResponse;
 import com.example.banksystem.response.account.AccountBalanceDecreaseResponse;
 import com.example.banksystem.response.account.AccountBalanceIncreaseResponse;
 import com.example.banksystem.response.account.AccountCreateResponse;
@@ -146,4 +147,33 @@ public class AccountService {
         return iban;
     }
 
+    public TransferFromAccountToAccountResponse
+    transferFromAccountToAccount(Double amount, String fromAccountNumber, String toAccountNumber) {
+        ErrorType errorType = null;
+
+        if (!accountValidator.isValidAccountNumber(fromAccountNumber) ||
+                !accountValidator.isValidAccountNumber(toAccountNumber)) {
+
+            errorType = ErrorType.NOT_VALID;
+            return new TransferFromAccountToAccountResponse(errorType);
+        }
+        if (!accountRepository.existsAccountByAccountNumber(fromAccountNumber) ||
+                !accountRepository.existsAccountByAccountNumber(toAccountNumber)) {
+            errorType = ErrorType.NOT_FOUND;
+            return new TransferFromAccountToAccountResponse(errorType);
+        }
+        Account fromAccount = accountRepository.getAccountByAccountNumber(fromAccountNumber);
+        if (fromAccount.getAccountBalance() < amount) {
+            errorType = ErrorType.INSUFFICIENT_BALANCE;
+            return new TransferFromAccountToAccountResponse(errorType);
+        }
+
+        fromAccount.setAccountBalance(fromAccount.getAccountBalance() - amount);
+        accountRepository.save(fromAccount);
+        Account toAccount = accountRepository.getAccountByAccountNumber(toAccountNumber);
+        toAccount.setAccountBalance(toAccount.getAccountBalance() + amount);
+        accountRepository.save(toAccount);
+        return new TransferFromAccountToAccountResponse();
+
+    }
 }

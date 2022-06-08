@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Email;
+
 @RestController
 @RequestMapping("/api/client")
 public class ClientController {
@@ -31,7 +33,6 @@ public class ClientController {
         }
         return clientCreateResponse.onSuccess(clientDto);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteClient(@PathVariable("id") Long id) {

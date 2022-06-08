@@ -1,6 +1,7 @@
 package com.example.banksystem.controller;
 
 import com.example.banksystem.model.enums.ErrorType;
+import com.example.banksystem.response.TransferFromAccountToAccountResponse;
 import com.example.banksystem.response.account.AccountBalanceDecreaseResponse;
 import com.example.banksystem.response.account.AccountBalanceIncreaseResponse;
 import com.example.banksystem.response.account.AccountCreateResponse;
@@ -19,6 +20,20 @@ public class AccountController {
     @Autowired
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
+    }
+
+
+    @PutMapping("/transferAccountAccount")
+    public ResponseEntity<?> transferFromAccountToAccount(@RequestBody Double amount,
+                                                       @RequestBody String fromAccountNumber,
+                                                       @RequestBody String toAccountNumber) {
+        TransferFromAccountToAccountResponse transferResponse = accountService.
+                transferFromAccountToAccount(amount, fromAccountNumber, toAccountNumber);
+        ErrorType errorType = transferResponse.getErrorType();
+        if (errorType != null) {
+            return transferResponse.onFailure(errorType);
+        }
+        return transferResponse.onSuccess();
     }
 
     @PostMapping("/{id}")

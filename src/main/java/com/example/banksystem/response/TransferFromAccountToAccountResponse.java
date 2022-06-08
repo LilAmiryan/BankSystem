@@ -1,33 +1,30 @@
-package com.example.banksystem.response.card;
+package com.example.banksystem.response;
 
-import com.example.banksystem.dto.CardDto;
 import com.example.banksystem.model.enums.ErrorType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class TransferFromCardToAccountResponse {
+public class TransferFromAccountToAccountResponse {
 
     private ErrorType errorType;
 
-
-    public TransferFromCardToAccountResponse() {
+    public TransferFromAccountToAccountResponse() {
     }
 
-    public TransferFromCardToAccountResponse(ErrorType errorType) {
+    public TransferFromAccountToAccountResponse(ErrorType errorType) {
         this.errorType = errorType;
     }
+
 
     public ResponseEntity<?> onFailure(ErrorType errorType) {
         ResponseEntity<?> response;
         switch (errorType) {
             case NOT_VALID -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body("Input valid card or account number ");
+                    body("Input valid account number ");
             case NOT_FOUND -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body("No account or card with such account or card number.");
+                    body("No account with such account or card number.");
             case INSUFFICIENT_BALANCE -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body("Insufficient balance.");
-            case BLOCKED -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body("Card is blocked.");
             default -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Unknown error");
         }
