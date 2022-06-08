@@ -1,5 +1,6 @@
 package com.example.banksystem.controller;
 
+import com.example.banksystem.dto.Order;
 import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.response.TransferFromAccountToAccountResponse;
 import com.example.banksystem.response.account.AccountBalanceDecreaseResponse;
@@ -24,11 +25,12 @@ public class AccountController {
 
 
     @PutMapping("/transferAccountAccount")
-    public ResponseEntity<?> transferFromAccountToAccount(@RequestBody Double amount,
-                                                       @RequestBody String fromAccountNumber,
-                                                       @RequestBody String toAccountNumber) {
+    public ResponseEntity<?> transferFromAccountToAccount(@RequestBody Order order) {
         TransferFromAccountToAccountResponse transferResponse = accountService.
-                transferFromAccountToAccount(amount, fromAccountNumber, toAccountNumber);
+                transferFromAccountToAccount(
+                        order.getAmount(),
+                        order.getFromAccountNumber(),
+                        order.getToAccountNumber());
         ErrorType errorType = transferResponse.getErrorType();
         if (errorType != null) {
             return transferResponse.onFailure(errorType);
