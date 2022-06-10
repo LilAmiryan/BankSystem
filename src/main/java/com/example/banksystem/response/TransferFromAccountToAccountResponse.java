@@ -22,7 +22,7 @@ public class TransferFromAccountToAccountResponse {
             case NOT_VALID -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body("Input valid account number ");
             case NOT_FOUND -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
-                    body("No account with such account or card number.");
+                    body("No account with such account number.");
             case INSUFFICIENT_BALANCE -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body("Insufficient balance.");
             default -> response = ResponseEntity.status(HttpStatus.BAD_REQUEST)
