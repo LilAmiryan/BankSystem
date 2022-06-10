@@ -26,16 +26,10 @@ public class AccountController {
 
     @PutMapping("/transferAccountAccount")
     public ResponseEntity<?> transferFromAccountToAccount(@RequestBody Order order) {
-        TransferFromAccountToAccountResponse transferResponse = accountService.
-                transferFromAccountToAccount(
+        return accountService.transferFromAccountToAccount(
                         order.getAmount(),
                         order.getFromAccountNumber(),
                         order.getToAccountNumber());
-        ErrorType errorType = transferResponse.getErrorType();
-        if (errorType != null) {
-            return transferResponse.onFailure(errorType);
-        }
-        return transferResponse.onSuccess();
     }
 
     @PostMapping("/{id}")

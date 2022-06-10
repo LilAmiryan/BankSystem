@@ -8,7 +8,6 @@ import com.example.banksystem.model.enums.ErrorType;
 import com.example.banksystem.repository.AccountRepository;
 import com.example.banksystem.repository.BankRepository;
 import com.example.banksystem.repository.ClientRepository;
-import com.example.banksystem.response.TransferFromAccountToAccountResponse;
 import com.example.banksystem.response.account.AccountBalanceDecreaseResponse;
 import com.example.banksystem.response.account.AccountBalanceIncreaseResponse;
 import com.example.banksystem.response.account.AccountCreateResponse;
@@ -16,6 +15,8 @@ import com.example.banksystem.response.account.AccountDeleteResponse;
 import com.example.banksystem.validator.AccountValidator;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -147,25 +148,20 @@ public class AccountService {
         return iban;
     }
 
-    public TransferFromAccountToAccountResponse
-    transferFromAccountToAccount(Double amount, String fromAccountNumber, String toAccountNumber) {
-        ErrorType errorType = null;
-
+    public ResponseEntity<?>  transferFromAccountToAccount(Double amount, String fromAccountNumber, String toAccountNumber) {
         if (!accountValidator.isValidAccountNumber(fromAccountNumber) ||
                 !accountValidator.isValidAccountNumber(toAccountNumber)) {
 
-            errorType = ErrorType.NOT_VALID;
-            return new TransferFromAccountToAccountResponse(errorType);
+
+            return new ResponseEntity<>("Input valid account number", HttpStatus.BAD_REQUEST) ;
         }
         if (!accountRepository.existsAccountByAccountNumber(fromAccountNumber) ||
                 !accountRepository.existsAccountByAccountNumber(toAccountNumber)) {
-            errorType = ErrorType.NOT_FOUND;
-            return new TransferFromAccountToAccountResponse(errorType);
+            return new ResponseEntity<>("No account with such account or card number.",HttpStatus.BAD_REQUEST);
         }
         Account fromAccount = accountRepository.getAccountByAccountNumber(fromAccountNumber);
         if (fromAccount.getAccountBalance() < amount) {
-            errorType = ErrorType.INSUFFICIENT_BALANCE;
-            return new TransferFromAccountToAccountResponse(errorType);
+            return new ResponseEntity<>("Insufficient balance.",HttpStatus.BAD_REQUEST);
         }
 
         fromAccount.setAccountBalance(fromAccount.getAccountBalance() - amount);
@@ -173,7 +169,7 @@ public class AccountService {
         Account toAccount = accountRepository.getAccountByAccountNumber(toAccountNumber);
         toAccount.setAccountBalance(toAccount.getAccountBalance() + amount);
         accountRepository.save(toAccount);
-        return new TransferFromAccountToAccountResponse();
+        return new ResponseEntity<>("Success!",HttpStatus.OK);
 
     }
 }
